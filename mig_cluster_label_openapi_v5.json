@@ -1,0 +1,665 @@
+{
+    "openapi": "3.1.0",
+    "info": {
+        "title": "Cluster Labeling & AI Inference API",
+        "description": "AI-powered document cluster labeling workflow using watsonx foundation models. Supports reading data, inferring cluster labels, exporting results and summaries.",
+        "contact": {
+            "name": "EMEA Build Lab",
+            "email": "shanmsel@in.ibm.com"
+        },
+        "license": {
+            "name": "Apache 2.0",
+            "url": "https://www.apache.org/licenses/LICENSE-2.0.html"
+        },
+        "version": "1.0.0"
+    },
+    "servers": [
+    {
+      "url": "https://mg-cluster-label-ai.22tiz244bjhq.eu-gb.codeengine.appdomain.cloud",
+      "description": "Migrato POC Server"
+    }
+],
+    "paths": {
+        "/data/read": {
+            "get": {
+                "summary": "Read Data",
+                "operationId": "read_data",
+                "parameters": [
+                    {
+                        "name": "source",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "description": "Data source: csv or db",
+                            "default": "db",
+                            "title": "Source"
+                        },
+                        "description": "Data source: csv or db"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ReadDataResponse"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/data/unlabeled-clusters": {
+            "get": {
+                "summary": "Get Unlabeled Clusters",
+                "description": "Returns only the list of unlabeled cluster IDs for lightweight operations.",
+                "operationId": "get_unlabeled_clusters",
+                "parameters": [
+                    {
+                        "name": "source",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "description": "Data source: csv or db",
+                            "default": "db",
+                            "title": "Source"
+                        },
+                        "description": "Data source: csv or db"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UnlabeledClustersResponse"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/cluster/infersingle": {
+            "get": {
+                "summary": "Infer Labels Single",
+                "operationId": "infer_labels_cluster_single",
+                "parameters": [
+                    {
+                        "name": "cluster_id",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "title": "Cluster Id"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/cluster/infer": {
+            "get": {
+                "summary": "Infer Labels",
+                "operationId": "infer_labels_cluster",
+                "parameters": [
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "default": 10,
+                            "title": "Limit"
+                        }
+                    },
+                    {
+                        "name": "process_all",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "boolean",
+                            "default": false,
+                            "title": "Process All"
+                        }
+                    },
+                    {
+                        "name": "source",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "default": "db",
+                            "title": "Source"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/cluster/inferlimit": {
+            "get": {
+                "summary": "Infer Labels Limit",
+                "operationId": "infer_labels_cluster_limit",
+                "parameters": [
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "default": 10,
+                            "title": "Limit"
+                        }
+                    },
+                    {
+                        "name": "source",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "default": "db",
+                            "title": "Source"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/download/{filename}": {
+            "get": {
+                "summary": "Download File",
+                "operationId": "download_file",
+                "parameters": [
+                    {
+                        "name": "filename",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "title": "Filename"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/results/export": {
+            "get": {
+                "summary": "Export Results",
+                "operationId": "export_results_csv",
+                "parameters": [
+                    {
+                        "name": "format",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "description": "Format: csv ,json(default)",
+                            "default": "csv",
+                            "title": "Format"
+                        },
+                        "description": "Format: csv ,json(default)"
+                    },
+                    {
+                        "name": "source",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "description": "Format: db,csv)",
+                            "default": "db",
+                            "title": "Source"
+                        },
+                        "description": "Format: db,csv)"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/results/export/summary": {
+            "get": {
+                "summary": "Export Summary",
+                "description": "Reads data and identifies which clusters have or lack labels.",
+                "operationId": "results_summary",
+                "parameters": [
+                    {
+                        "name": "source",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "description": "Data source: csv or db",
+                            "default": "db",
+                            "title": "Source"
+                        },
+                        "description": "Data source: csv or db"
+                    },
+                    {
+                        "name": "filter",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "anyOf": [
+                                {
+                                    "type": "string"
+                                },
+                                {
+                                    "type": "null"
+                                }
+                            ],
+                            "title": "Filter"
+                        }
+                    },
+                    {
+                        "name": "sort",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "anyOf": [
+                                {
+                                    "type": "string"
+                                },
+                                {
+                                    "type": "null"
+                                }
+                            ],
+                            "title": "Sort"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/db/extend-schema": {
+            "post": {
+                "summary": "Extend Schema",
+                "description": "Extends the database schema to add cluster labeling fields.",
+                "operationId": "extend_db_schema",
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/data/reset": {
+            "post": {
+                "summary": "Reset Labels",
+                "operationId": "reset_labels",
+                "parameters": [
+                    {
+                        "name": "source",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "description": "Data source: csv or db",
+                            "default": "db",
+                            "title": "Source"
+                        },
+                        "description": "Data source: csv or db"
+                    },
+                    {
+                        "name": "confirm",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "boolean",
+                            "description": "Must be true to perform reset",
+                            "default": false,
+                            "title": "Confirm"
+                        },
+                        "description": "Must be true to perform reset"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/data/resetlimit": {
+            "post": {
+                "summary": "Reset Labels Limit",
+                "operationId": "reset_labels_limit",
+                "parameters": [
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "default": 10,
+                            "title": "Limit"
+                        }
+                    },
+                    {
+                        "name": "confirm",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "boolean",
+                            "description": "Must be true to perform reset",
+                            "default": false,
+                            "title": "Confirm"
+                        },
+                        "description": "Must be true to perform reset"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "HTTPValidationError": {
+                "properties": {
+                    "detail": {
+                        "items": {
+                            "$ref": "#/components/schemas/ValidationError"
+                        },
+                        "type": "array",
+                        "title": "Detail"
+                    }
+                },
+                "type": "object",
+                "title": "HTTPValidationError"
+            },
+            "Overview": {
+                "properties": {
+                    "total_documents": {
+                        "type": "integer",
+                        "title": "Total Documents"
+                    },
+                    "total_clusters": {
+                        "type": "integer",
+                        "title": "Total Clusters"
+                    },
+                    "labeled_clusters": {
+                        "type": "integer",
+                        "title": "Labeled Clusters"
+                    },
+                    "unlabeled_clusters": {
+                        "type": "integer",
+                        "title": "Unlabeled Clusters"
+                    },
+                    "coverage_percent": {
+                        "type": "number",
+                        "title": "Coverage Percent"
+                    },
+                    "data_source": {
+                        "type": "string",
+                        "title": "Data Source"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "total_documents",
+                    "total_clusters",
+                    "labeled_clusters",
+                    "unlabeled_clusters",
+                    "coverage_percent",
+                    "data_source"
+                ],
+                "title": "Overview"
+            },
+            "ReadDataResponse": {
+                "properties": {
+                    "overview": {
+                        "$ref": "#/components/schemas/Overview"
+                    },
+                    "doc_label_status_distribution": {
+                        "additionalProperties": {
+                            "type": "integer"
+                        },
+                        "type": "object",
+                        "title": "Doc Label Status Distribution"
+                    },
+                    "unlabeled_cluster_ids": {
+                        "items": {
+                            "type": "integer"
+                        },
+                        "type": "array",
+                        "title": "Unlabeled Cluster Ids"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "overview",
+                    "doc_label_status_distribution",
+                    "unlabeled_cluster_ids"
+                ],
+                "title": "ReadDataResponse"
+            },
+            "UnlabeledClustersResponse": {
+                "properties": {
+                    "unlabeled_cluster_ids": {
+                        "items": {
+                            "type": "integer"
+                        },
+                        "type": "array",
+                        "title": "Unlabeled Cluster Ids"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "unlabeled_cluster_ids"
+                ],
+                "title": "UnlabeledClustersResponse"
+            },
+            "ValidationError": {
+                "properties": {
+                    "loc": {
+                        "items": {
+                            "anyOf": [
+                                {
+                                    "type": "string"
+                                },
+                                {
+                                    "type": "integer"
+                                }
+                            ]
+                        },
+                        "type": "array",
+                        "title": "Location"
+                    },
+                    "msg": {
+                        "type": "string",
+                        "title": "Message"
+                    },
+                    "type": {
+                        "type": "string",
+                        "title": "Error Type"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "loc",
+                    "msg",
+                    "type"
+                ],
+                "title": "ValidationError"
+            }
+        }
+    }
+}

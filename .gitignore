@@ -1,0 +1,55 @@
+####################################
+# PYTHON ARTIFACTS
+####################################
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.log
+
+####################################
+# VENV / PACKAGE ARTIFACTS
+####################################
+env/
+venv/
+.venv/
+
+####################################
+# SYSTEM / IDE FILES
+####################################
+.DS_Store
+.vscode/
+.idea/
+
+####################################
+# ARCHIVES & TEMP FILES
+####################################
+*.zip
+*.tmp
+*backup*
+*~
+
+
+####################################
+# PROJECT SPECIFIC
+####################################
+# Data (only keep sample CSV in repo)
+data/*
+!data/core_assets_sample.csv
+
+# Archived results not needed
+archived/
+
+# DB dumps and dev-only SQLs
+database/*.sql
+database/*.bak
+database/*.dump
+
+# Tool compiled cache
+tools/__pycache__/
+
+####################################
+# DO NOT IGNORE THESE
+####################################
+# Keep .gitignore itself
+!.gitignore

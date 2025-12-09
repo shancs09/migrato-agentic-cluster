@@ -1,0 +1,39 @@
+# .env
+#DB Settings
+#DEV
+# MYSQL_HOST=127.0.0.1
+# MYSQL_PORT=3306
+# MYSQL_USER=root
+# MYSQL_PASSWORD=root
+# MYSQL_DATABASE=opendata_rijksoverheid_dbs
+
+#PROD
+MYSQL_HOST=micc-se.azure.com
+MYSQL_USER=ibm
+MYSQL_DATABASE=overhdbs
+MYSQL_PORT=3306
+MYSQL_PASSWORD=ghjgjh
+
+
+#DB Schema
+TABLE_NAME=core_assets
+OUTPUT_DIR=./data
+
+## Cluster Labeler Settings
+CLUSTER_SAMPLE_SIZE=3
+SIMILARITY_THRESHOLD=0.75
+LLM_INPUT_MAX_CHARS=40000
+
+## Default Data Source
+DEFAULT_DATA_SOURCE=db  # Options: 'csv' or 'db'
+ENABLE_DATA_BACKUP=false
+
+## Watsonx Settings
+wx_api_key=il42h1yR3wG9atgWXEW7TJTI
+wx_service_url=https://us-south.ml.cloud.ibm.com
+wx_project_id=0e1183c-650128420419
+# wx_llm_model_id=mistralai/mistral-medium-2505
+wx_llm_model_id=meta-llama/llama-4-maverick-17b-128e-instruct-fp8
+# wx_embedding_model=sentence-transformers/all-minilm-l6-v2
+wx_embedding_model=intfloat/multilingual-e5-large
+KEYWORD_SIGNALS={"invoice_keywords":["invoice number","bill to","due date","total","amount"],"agenda_keywords":["agenda","meeting objective","topics","presenter"],"minutes_keywords":["minutes of meeting","attendees","discussion","action items"],"quotation_keywords":["quote","valid until","price","terms and conditions"],"bom_keywords":["part number","quantity","unit cost","description"]}
