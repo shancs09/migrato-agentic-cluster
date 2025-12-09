@@ -1,48 +1,29 @@
-####################################
-# ENV / SECRET FILES
-####################################
-.env
-.env.*
-
-####################################
-# DATA FILES (NO CSV IN GIT)
-####################################
-data/*.csv
-data/*
-
-####################################
-# PYTHON CACHE
-####################################
+# ---- Python build artifacts ----
 __pycache__/
 *.pyc
 *.pyo
 *.pyd
 *.log
+*.sqlite
+*.db
 
-####################################
-# IDE / SYSTEM FILES
-####################################
-.DS_Store
+# ---- IDE / System files ----
 .vscode/
 .idea/
+.DS_Store
+.git/
+.gitignore
 
-####################################
-# ARCHIVES & TEMP FILES
-####################################
-*.tmp
-*.bak
-*backup*
-*~
+# ---- Project cleanup ----
+archived/
+tests/
+docs/
 
-####################################
-# DATABASE / BACKUPS
-####################################
+# ---- Data ----
+data/*
+!data/core_assets_sample.csv
+
+# ---- Database dumps ----
 database/*.sql
+database/*.bak
 database/*.dump
-database/*.sqlite
-database/*.db
-
-####################################
-# KEEP THIS FILE
-####################################
-!.gitignore

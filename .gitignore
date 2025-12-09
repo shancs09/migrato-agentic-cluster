@@ -1,5 +1,30 @@
 ####################################
-# PYTHON ARTIFACTS
+# ENV / SECRET FILES
+####################################
+.env
+.env.*
+
+####################################
+# DATA FILES (NEVER TRACK)
+####################################
+data/
+
+####################################
+# ARCHIVED RESULTS / BACKUPS
+####################################
+archived/
+
+####################################
+# DATABASE / BACKUPS
+####################################
+database/*.sql
+database/*.dump
+database/*.bak
+database/*.sqlite
+database/*.db
+
+####################################
+# PYTHON CACHE
 ####################################
 __pycache__/
 *.pyc
@@ -8,48 +33,28 @@ __pycache__/
 *.log
 
 ####################################
-# VENV / PACKAGE ARTIFACTS
+# VIRTUAL ENVS (OPTIONAL)
 ####################################
-env/
 venv/
 .venv/
+env/
 
 ####################################
-# SYSTEM / IDE FILES
+# IDE / SYSTEM FILES
 ####################################
 .DS_Store
 .vscode/
 .idea/
 
 ####################################
-# ARCHIVES & TEMP FILES
+# TEMP FILES (ZIP ALLOWED)
 ####################################
-*.zip
 *.tmp
+*.bak
 *backup*
 *~
 
-
 ####################################
-# PROJECT SPECIFIC
+# KEEP THIS FILE
 ####################################
-# Data (only keep sample CSV in repo)
-data/*
-!data/core_assets_sample.csv
-
-# Archived results not needed
-archived/
-
-# DB dumps and dev-only SQLs
-database/*.sql
-database/*.bak
-database/*.dump
-
-# Tool compiled cache
-tools/__pycache__/
-
-####################################
-# DO NOT IGNORE THESE
-####################################
-# Keep .gitignore itself
 !.gitignore
