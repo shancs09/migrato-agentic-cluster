@@ -13,9 +13,13 @@ This project orchestrates end-to-end cluster labeling workflows:
 
 ---
 
-## 🧠 Agent Overview
 
-**Agent name:** `AIClusterLabelingAgent`  
+## Architecture
+
+![Overview](image.png)
+
+## Agent Overview
+**Agent name:** `AI_Cluster_Labeling_Agent`  
 **Kind:** `native` (watsonx Orchestrate agent)  
 **Model:** `watsonx/meta-llama/llama-3-2-90b-vision-instruct`  
 
